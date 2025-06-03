@@ -607,11 +607,18 @@
         <availability>online</availability>
         <displayType>button</displayType>
         <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
         <height>600</height>
+        <isResizable>true</isResizable>
         <linkType>url</linkType>
         <masterLabel>Open Item Purchase Tool</masterLabel>
-        <openType>sidebar</openType>
+        <openType>newWindow</openType>
+        <position>none</position>
         <protected>false</protected>
-        <url>/lightning/n/Item_Purchase_Tool_page?accountId={!Account.Id}</url>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>/lightning/n/Item_Purchase_Tool_page?c__accountId={!Account.Id}</url>
     </webLinks>
 </CustomObject>

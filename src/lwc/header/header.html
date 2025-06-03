@@ -1,0 +1,14 @@
+<template>
+    <lightning-card title="Item Purchase Tool">
+        <template lwc:if={account}>
+            <p style="padding: 0 20px 0 20px;display: flex; justify-content: space-between;">
+                <strong>{account.Name}</strong>
+                <strong>{account.AccountNumber}</strong>
+                <strong>{account.Industry}</strong>
+            </p>
+        </template>
+        <template lwc:else>
+            <p>loading..</p>
+        </template>
+    </lightning-card>
+</template>
