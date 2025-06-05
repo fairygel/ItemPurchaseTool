@@ -1,10 +1,12 @@
-import { LightningElement, wire, api } from 'lwc';
+import { LightningElement, wire } from 'lwc';
 import { CurrentPageReference } from 'lightning/navigation';
 import getAccountDetails from '@salesforce/apex/AccountController.getAccountDetails'
 
 export default class ItemPurchaseTool extends LightningElement {
     accountId;
+
     account;
+    error;
 
     @wire(CurrentPageReference)
     getPageRef(pageRef) {
@@ -13,7 +15,7 @@ export default class ItemPurchaseTool extends LightningElement {
         }
 
         getAccountDetails({accountId: this.accountId})
-            .then(account => {this.account = account})
-            .catch(error => console.log(error));
+            .then(account => {this.account = account; this.error = undefined})
+            .catch(error => {console.log(error); this.error = error;});
     }
 }

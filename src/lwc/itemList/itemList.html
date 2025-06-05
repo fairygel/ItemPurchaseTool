@@ -1,0 +1,81 @@
+<template>
+    <lightning-card>
+        <div class="container slds-p-around_x-large">
+            <div class="items-section">
+                <lightning-input
+                        type="search"
+                        label="Search Items"
+                        value={searchKey}
+                        onchange={handleSearchChange}>
+                </lightning-input>
+
+                <template if:true={items}>
+                    <div class="card-grid slds-m-top--small">
+                        <template for:each={items} for:item="item">
+                            <div key={item.Id} class="card-item">
+                                <div class="slds-box slds-box_x-small"
+                                     style="border: 1px solid #d8dde6; border-radius: 0.5rem;">
+                                    <lightning-card title={item.Name__c}>
+                                        <div class="slds-p-around_medium">
+                                            <template if:true={item.Image__c}>
+                                                <div class="slds-align_absolute-center slds-m-bottom_small">
+                                                    <img src={item.Image__c} alt={item.Name__c}
+                                                         style="max-height: 150px; width: 100%; object-fit: cover; border-radius: 0.25rem;"/>
+                                                </div>
+                                            </template>
+                                            <p><strong>Price:</strong> ${item.Price__c}</p>
+                                        </div>
+                                    </lightning-card>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+
+                <template if:true={error}>
+                    <div class="slds-text-color_error slds-p-around_medium">
+                        <p>Error: {error}</p>
+                    </div>
+                </template>
+
+                <template if:false={items}>
+                    <div class="slds-p-around_medium slds-text-align_center">
+                        <lightning-spinner alternative-text="Loading items" size="medium"></lightning-spinner>
+                    </div>
+                </template>
+            </div>
+
+            <div class="filters-section slds-box slds-box_x-small slds-m-top--large" style="min-width: 250px;">
+                <h3 class="slds-text-heading_small slds-m-bottom_medium">Filters</h3>
+
+                <div class="filter-group">
+                    <p class="slds-text-title_caps slds-m-bottom_small">Family</p>
+                    <template for:each={familyOptions} for:item="family">
+                        <lightning-input
+                                class="slds-m-left_small"
+                                type="checkbox"
+                                key={family}
+                                label={family}
+                                value={family}
+                                onchange={handleFamilyChange}>
+                        </lightning-input>
+                    </template>
+                </div>
+
+                <div class="filter-group slds-m-top_medium">
+                    <p class="slds-text-title_caps slds-m-bottom_small">Type</p>
+                    <template for:each={typeOptions} for:item="type">
+                        <lightning-input
+                                class="slds-m-left_small"
+                                type="checkbox"
+                                key={type}
+                                label={type}
+                                value={type}
+                                onchange={handleTypeChange}>
+                        </lightning-input>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </lightning-card>
+</template>

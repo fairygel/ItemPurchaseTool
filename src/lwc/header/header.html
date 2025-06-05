@@ -1,14 +1,25 @@
 <template>
     <lightning-card>
-        <template lwc:if={account}>
-            <p style="padding: 0 20px 0 20px;display: flex; justify-content: space-between;">
-                <strong>{account.Name}</strong>
-                <strong>{account.AccountNumber}</strong>
-                <strong>{account.Industry}</strong>
-            </p>
-        </template>
-        <template lwc:else>
-            <p>loading..</p>
-        </template>
+        <div class="slds-m-horizontal--medium slds-m-bottom--large">
+            <template lwc:if={error}>
+                <p class="slds-text-align--center">
+                    <strong style="color: #912727">cant load account. open console to get reason.</strong>
+                </p>
+            </template>
+            <template lwc:else>
+                <template lwc:if={account}>
+                    <p style="padding: 0 20px; display: flex; justify-content: space-between; text-align: center;">
+                        <span style="flex: 1; text-align: left;"><strong>{account.Name}</strong></span>
+                        <span style="flex: 1;"><strong>{account.AccountNumber}</strong></span>
+                        <span style="flex: 1; text-align: right;"><strong>{account.Industry}</strong></span>
+                    </p>
+                </template>
+                <template lwc:else>
+                    <p class="slds-text-align--center">
+                        <strong>loading..</strong>
+                    </p>
+                </template>
+            </template>
+        </div>
     </lightning-card>
 </template>
