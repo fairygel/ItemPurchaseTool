@@ -1,8 +1,8 @@
 import { LightningElement, wire } from 'lwc';
-import { CurrentPageReference } from 'lightning/navigation';
+import { CurrentPageReference, NavigationMixin } from 'lightning/navigation';
 import getAccountDetails from '@salesforce/apex/AccountController.getAccountDetails'
 
-export default class ItemPurchaseTool extends LightningElement {
+export default class ItemPurchaseTool extends NavigationMixin(LightningElement) {
     accountId;
 
     account;
@@ -17,5 +17,18 @@ export default class ItemPurchaseTool extends LightningElement {
         getAccountDetails({accountId: this.accountId})
             .then(account => {this.account = account; this.error = undefined})
             .catch(error => {console.log(error); this.error = error;});
+    }
+
+    handleNavigate() {
+        this[NavigationMixin.Navigate]({
+            type: 'standard__objectPage',
+            attributes: {
+                objectApiName: 'Account',
+                actionName: 'list'
+            },
+            state: {
+                filterName: 'AllAccounts'
+            }
+        });
     }
 }

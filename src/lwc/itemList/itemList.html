@@ -25,12 +25,25 @@
                                             </template>
                                             <p><strong>Price:</strong> ${item.Price__c}</p>
                                         </div>
+                                        <lightning-button
+                                                label="Details"
+                                                variant="brand"
+                                                data-id={item.Id}
+                                                onclick={handleShowDetails}
+                                                class="slds-m-top_small">
+                                        </lightning-button>
                                     </lightning-card>
                                 </div>
                             </div>
                         </template>
                     </div>
                 </template>
+
+                <c-item-details
+                        item={selectedItem}
+                        visible={isModalOpen}
+                        onclose={handleCloseModal}>
+                </c-item-details>
 
                 <template if:true={error}>
                     <div class="slds-text-color_error slds-p-around_medium">

@@ -1,0 +1,27 @@
+<template>
+    <template if:true={visible}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 class="slds-text-heading_medium">{item.Name__c}</h2>
+                </header>
+
+                <div class="slds-modal__content slds-p-around_medium">
+                    <template if:true={item.Image__c}>
+                        <img src={item.Image__c} alt={item.Name__c}
+                             style="max-height: 200px; width: 100%; object-fit: cover; border-radius: 0.5rem;" />
+                    </template>
+                    <p><strong>Description:</strong> {item.Description__c}</p>
+                    <p><strong>Type:</strong> {item.Type__c}</p>
+                    <p><strong>Family:</strong> {item.Family__c}</p>
+                    <p><strong>Price:</strong> ${item.Price__c}</p>
+                </div>
+
+                <footer class="slds-modal__footer">
+                    <lightning-button label="Close" onclick={handleClose}></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

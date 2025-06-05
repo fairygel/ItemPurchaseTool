@@ -13,6 +13,21 @@ export default class ItemList extends LightningElement {
     @track familyOptions = [];
     @track typeOptions = [];
 
+    @track selectedItem = null;
+    @track isModalOpen = false;
+
+    handleShowDetails(event) {
+        const itemId = event.currentTarget.dataset.id;
+        const item = this.items.find(i => i.Id === itemId);
+        this.selectedItem = item;
+        this.isModalOpen = true;
+    }
+
+    handleCloseModal() {
+        this.isModalOpen = false;
+        this.selectedItem = null;
+    }
+
     connectedCallback() {
         this.loadPicklistValues();
         this.loadItems();

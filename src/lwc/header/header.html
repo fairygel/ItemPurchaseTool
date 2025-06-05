@@ -2,9 +2,14 @@
     <lightning-card>
         <div class="slds-m-horizontal--medium slds-m-bottom--large">
             <template lwc:if={error}>
-                <p class="slds-text-align--center">
-                    <strong style="color: #912727">cant load account. open console to get reason.</strong>
-                </p>
+                <div class="slds-text-align--center">
+                    <strong>account not chosen. </strong>
+                    <lightning-button
+                            label="go to accounts"
+                            onclick={handleNavigate}
+                            variant="brand">
+                    </lightning-button>
+                </div>
             </template>
             <template lwc:else>
                 <template lwc:if={account}>
