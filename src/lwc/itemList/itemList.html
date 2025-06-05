@@ -88,6 +88,14 @@
                         </lightning-input>
                     </template>
                 </div>
+                <div class="slds-text-heading_small slds-m-top--small">
+                    <template if:true={items}>
+                        <h3>Total: {items.length}</h3>
+                    </template>
+                    <template if:false={items}>
+                        <h3>No items found :'(</h3>
+                    </template>
+                </div>
             </div>
         </div>
     </lightning-card>
