@@ -1,14 +1,28 @@
 import { LightningElement, wire } from 'lwc';
 import { CurrentPageReference, NavigationMixin } from 'lightning/navigation';
 import getAccountDetails from '@salesforce/apex/AccountController.getAccountDetails'
+import isUserManager from '@salesforce/apex/UserController.isUserManager'
 
 export default class ItemPurchaseTool extends NavigationMixin(LightningElement) {
+    isManager = false;
+    isManagerError;
+
     accountId;
 
     account;
-    error;
+    accountError;
 
     isModalOpen = false;
+
+    @wire(isUserManager)
+    wiredIsManager ({error, data}) {
+        if (data !== undefined) {
+            this.isManager = data;
+        } else if (error) {
+            console.log(error);
+            this.isManagerError = error;
+        }
+    }
 
     @wire(CurrentPageReference)
     getPageRef(pageRef) {
@@ -17,8 +31,8 @@ export default class ItemPurchaseTool extends NavigationMixin(LightningElement) 
         }
 
         getAccountDetails({accountId: this.accountId})
-            .then(account => {this.account = account; this.error = undefined})
-            .catch(error => {console.log(error); this.error = error;});
+            .then(account => {this.account = account; this.accountError = undefined})
+            .catch(error => {console.log(error); this.accountError = error;});
     }
 
     handleNavigate() {

@@ -1,7 +1,7 @@
 <template>
     <lightning-card>
         <div class="slds-m-horizontal--medium slds-m-bottom--large">
-            <template lwc:if={error}>
+            <template lwc:if={accountError}>
                 <div class="slds-text-align--center">
                     <strong>account not chosen. </strong>
                     <lightning-button
@@ -14,13 +14,15 @@
             <template lwc:else>
                 <template lwc:if={account}>
                     <p style="padding: 0 20px; display: flex; justify-content: space-between; text-align: center;">
-                        <span>
-                            <lightning-button
-                                    label="Add Item"
-                                    variant="brand"
-                                    onclick={handleShowCreateForm}>
-                            </lightning-button>
-                        </span>
+                        <template if:true={isManager}>
+                            <span>
+                                <lightning-button
+                                        label="Add Item"
+                                        variant="brand"
+                                        onclick={handleShowCreateForm}>
+                                </lightning-button>
+                            </span>
+                        </template>
                         <span style="flex: 1; text-align: left;"><strong>{account.Name}</strong></span>
                         <span style="flex: 1;"><strong>{account.AccountNumber}</strong></span>
                         <span style="flex: 1; text-align: right;"><strong>{account.Industry}</strong></span>
