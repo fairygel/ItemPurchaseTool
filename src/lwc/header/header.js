@@ -8,6 +8,8 @@ export default class ItemPurchaseTool extends NavigationMixin(LightningElement) 
     account;
     error;
 
+    isModalOpen = false;
+
     @wire(CurrentPageReference)
     getPageRef(pageRef) {
         if (pageRef?.state.c__accountId) {
@@ -30,5 +32,13 @@ export default class ItemPurchaseTool extends NavigationMixin(LightningElement) 
                 filterName: 'AllAccounts'
             }
         });
+    }
+
+    handleShowCreateForm() {
+        this.isModalOpen = true;
+    }
+
+    handleCloseModal() {
+        this.isModalOpen = false;
     }
 }

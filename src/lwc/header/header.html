@@ -14,16 +14,29 @@
             <template lwc:else>
                 <template lwc:if={account}>
                     <p style="padding: 0 20px; display: flex; justify-content: space-between; text-align: center;">
+                        <span>
+                            <lightning-button
+                                    label="Add Item"
+                                    variant="brand"
+                                    onclick={handleShowCreateForm}>
+                            </lightning-button>
+                        </span>
                         <span style="flex: 1; text-align: left;"><strong>{account.Name}</strong></span>
                         <span style="flex: 1;"><strong>{account.AccountNumber}</strong></span>
                         <span style="flex: 1; text-align: right;"><strong>{account.Industry}</strong></span>
                     </p>
                 </template>
+
                 <template lwc:else>
                     <p class="slds-text-align--center">
                         <strong>loading..</strong>
                     </p>
                 </template>
+
+                <c-item-create-form
+                        visible={isModalOpen}
+                        onclose={handleCloseModal}>
+                </c-item-create-form>
             </template>
         </div>
     </lightning-card>

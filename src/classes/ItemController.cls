@@ -1,6 +1,8 @@
 public with sharing class ItemController {
-	@AuraEnabled(cacheable=true)
-	public static List<Item__c> getItemsBySearch(String searchKey, List<String> familyFilters, List<String> typeFilters) {
+	@AuraEnabled(cacheable = true)
+	public static List<Item__c> getItemsBySearch(String searchKey,
+												 List<String> familyFilters,
+												 List<String> typeFilters) {
 		String search = '%' + searchKey + '%';
 
 		List<String> filters = new List<String>();
@@ -14,13 +16,15 @@ public with sharing class ItemController {
 		}
 
 		String whereClause = String.join(filters, ' AND ');
-		String query = 'SELECT Id, Name__c, Description__c, Type__c, Family__c, Price__c, Image__c FROM Item__c WHERE ' + whereClause + ' LIMIT 50';
+		String query =
+				'SELECT Id, Name__c, Description__c, Type__c, Family__c, Price__c, Image__c FROM Item__c WHERE ' +
+				whereClause + ' LIMIT 50';
 
 		return Database.query(query);
 	}
 
 
-	@AuraEnabled(cacheable=true)
+	@AuraEnabled(cacheable = true)
 	public static Map<String, List<String>> getPicklistValues() {
 		Map<String, List<String>> picklists = new Map<String, List<String>>();
 
@@ -42,4 +46,39 @@ public with sharing class ItemController {
 
 		return picklists;
 	}
+
+	@AuraEnabled
+	public static void createItem(String name,
+								  String description,
+								  Decimal price,
+								  String type,
+								  String family,
+								  String image) {
+		try {
+			Item__c newItem = new Item__c(
+					Name = name,
+					Name__c = name,
+					Description__c = description,
+					Price__c = price,
+					Type__c = type,
+					Family__c = family,
+					Image__c = image
+			);
+			insert newItem;
+		} catch (Exception e) {
+			throw new AuraHandledException('Failed to insert item: ' + e.getMessage());
+		}
+	}
+
+
+	@AuraEnabled(cacheable = true)
+	public static List<String> getTypeOptions() {
+		return getPicklistValues().get('Type');
+	}
+
+	@AuraEnabled(cacheable = true)
+	public static List<String> getFamilyOptions() {
+		return getPicklistValues().get('Family');
+	}
+
 }
