@@ -1,7 +1,8 @@
-import {api, LightningElement, track, wire} from 'lwc';
+import {api, LightningElement, track} from 'lwc';
 import createItem from '@salesforce/apex/ItemController.createItem';
 import getTypeOptions from '@salesforce/apex/ItemController.getTypeOptions';
 import getFamilyOptions from '@salesforce/apex/ItemController.getFamilyOptions';
+import searchPhotoUrl from '@salesforce/apex/UnsplashService.searchPhotoUrl';
 
 export default class CreateItemForm extends LightningElement {
     @api visible = false;
@@ -32,6 +33,18 @@ export default class CreateItemForm extends LightningElement {
 
     handleNameChange(event) {
         this.item.name = event.target.value;
+
+        if (this.item.name && this.item.name.length > 2) {
+            searchPhotoUrl({ query: this.item.name })
+                .then(url => {
+                    if (url) {
+                        this.item.image = url;
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        }
     }
 
     handleDescriptionChange(event) {
