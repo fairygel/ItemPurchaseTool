@@ -39,7 +39,7 @@ public with sharing class CartController {
 		}
 
 		return [
-			SELECT Id, Item__r.Name__c, Quantity__c, Item__r.Price__c
+			SELECT Id, Item__r.Name__c, Quantity__c, Total__c
 				FROM CartItem__c
 				WHERE Cart__c = :carts[0].Id
 		];
