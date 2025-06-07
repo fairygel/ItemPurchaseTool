@@ -156,10 +156,10 @@
     <fields>
         <fullName>Cart__c</fullName>
         <label>Cart</label>
-        <referenceTo>WebCart</referenceTo>
+        <referenceTo>Cart__c</referenceTo>
         <relationshipLabel>Cart Items</relationshipLabel>
         <relationshipName>Cart_Items</relationshipName>
-        <relationshipOrder>0</relationshipOrder>
+        <relationshipOrder>1</relationshipOrder>
         <reparentableMasterDetail>false</reparentableMasterDetail>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
@@ -171,7 +171,7 @@
         <referenceTo>Item__c</referenceTo>
         <relationshipLabel>Cart Items</relationshipLabel>
         <relationshipName>Cart_Items1</relationshipName>
-        <relationshipOrder>1</relationshipOrder>
+        <relationshipOrder>0</relationshipOrder>
         <reparentableMasterDetail>false</reparentableMasterDetail>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>

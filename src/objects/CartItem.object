@@ -112,16 +112,6 @@
         <fullName>GrossUnitPrice</fullName>
     </fields>
     <fields>
-        <fullName>Item__c</fullName>
-        <deleteConstraint>Restrict</deleteConstraint>
-        <label>Item</label>
-        <referenceTo>Item__c</referenceTo>
-        <relationshipLabel>Cart Items</relationshipLabel>
-        <relationshipName>Cart_Items</relationshipName>
-        <required>true</required>
-        <type>Lookup</type>
-    </fields>
-    <fields>
         <fullName>ItemizedAdjustmentAmount</fullName>
     </fields>
     <fields>

@@ -7,6 +7,10 @@ export default class Cart extends LightningElement {
 
     @track
     cartItems = [];
+
+    @track
+    cartTotal = 0;
+
     isLoading = false;
     error;
 
@@ -27,6 +31,12 @@ export default class Cart extends LightningElement {
             .then((result) => {
                 this.cartItems = result;
                 this.isLoading = false;
+
+                if (result.length > 0) {
+                    this.cartTotal = result[0].Cart__r.TotalAmount__c;
+                } else {
+                    this.cartTotal = 0;
+                }
             })
             .catch((err) => {
                 this.error = err;
