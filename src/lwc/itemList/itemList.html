@@ -2,6 +2,9 @@
     <lightning-card>
         <div class="container slds-p-around_x-large">
             <div class="items-section">
+
+                <!-- SEARCH BAR -->
+
                 <lightning-input
                         type="search"
                         label="Search Items"
@@ -9,12 +12,17 @@
                         onchange={handleSearchChange}>
                 </lightning-input>
 
+                <!-- ALL ITEM CARDS -->
+
                 <template if:true={items}>
                     <div class="card-grid slds-m-top--small">
                         <template for:each={items} for:item="item">
                             <div key={item.Id} class="card-item">
                                 <div class="slds-box slds-box_x-small"
                                      style="border: 1px solid #d8dde6; border-radius: 0.5rem;">
+
+                                    <!-- ITEM CARD. TODO: make this stuff like another component -->
+
                                     <lightning-card title={item.Name__c}>
                                         <div class="slds-p-around_medium">
                                             <template if:true={item.Image__c}>
@@ -25,13 +33,24 @@
                                             </template>
                                             <p><strong>Price:</strong> ${item.Price__c}</p>
                                         </div>
-                                        <lightning-button
-                                                label="Details"
-                                                variant="brand"
-                                                data-id={item.Id}
-                                                onclick={handleShowDetails}
-                                                class="slds-m-top_small">
-                                        </lightning-button>
+
+                                        <!-- BUTTONS -->
+
+                                        <div>
+                                            <lightning-button
+                                                    label="Details"
+                                                    data-id={item.Id}
+                                                    onclick={handleShowDetails}
+                                                    class="slds-m-top_small">
+                                            </lightning-button>
+                                            <lightning-button
+                                                    label="Add To Cart"
+                                                    variant="brand"
+                                                    data-id={item.Id}
+                                                    onclick={handleAddToCart}
+                                                    class="slds-m-top_small">
+                                            </lightning-button>
+                                        </div>
                                     </lightning-card>
                                 </div>
                             </div>
@@ -39,11 +58,15 @@
                     </div>
                 </template>
 
+                <!-- WHEN ITEM DETAILS BUTTON CLICKED, SHOW THIS -->
+
                 <c-item-details
                         item={selectedItem}
                         visible={isModalOpen}
                         onclose={handleCloseModal}>
                 </c-item-details>
+
+                <!-- ERRORS, LOADING, etc. -->
 
                 <template if:true={error}>
                     <div class="slds-text-color_error slds-p-around_medium">
@@ -58,8 +81,12 @@
                 </template>
             </div>
 
+            <!-- FILTER WINDOW -->
+
             <div class="filters-section slds-box slds-box_x-small slds-m-top--large" style="min-width: 250px;">
                 <h3 class="slds-text-heading_small slds-m-bottom_medium">Filters</h3>
+
+                <!-- FAMILY -->
 
                 <div class="filter-group">
                     <p class="slds-text-title_caps slds-m-bottom_small">Family</p>
@@ -75,6 +102,8 @@
                     </template>
                 </div>
 
+                <!-- TYPE -->
+
                 <div class="filter-group slds-m-top_medium">
                     <p class="slds-text-title_caps slds-m-bottom_small">Type</p>
                     <template for:each={typeOptions} for:item="type">
@@ -88,6 +117,9 @@
                         </lightning-input>
                     </template>
                 </div>
+
+                <!-- TOTAL -->
+
                 <div class="slds-text-heading_small slds-m-top--small">
                     <template if:true={items}>
                         <h3>Total: {items.length}</h3>

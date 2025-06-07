@@ -35,6 +35,15 @@ export default class ItemPurchaseTool extends NavigationMixin(LightningElement) 
             .catch(error => {console.log(error); this.accountError = error;});
     }
 
+    handleCartOpen() {
+        this.isCartVisible = true;
+        this.template.querySelector('c-cart').open();
+    }
+
+    handleCloseCart() {
+        this.isCartVisible = false;
+    }
+
     handleNavigate() {
         this[NavigationMixin.Navigate]({
             type: 'standard__objectPage',

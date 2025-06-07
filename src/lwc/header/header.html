@@ -1,6 +1,9 @@
 <template>
     <lightning-card>
         <div class="slds-m-horizontal--medium slds-m-bottom--large">
+
+            <!-- ERROR NO ACCOUNT CHOSEN -->
+
             <template lwc:if={accountError}>
                 <div class="slds-text-align--center">
                     <strong>account not chosen. </strong>
@@ -11,14 +14,14 @@
                     </lightning-button>
                 </div>
             </template>
+
             <template lwc:else>
                 <template lwc:if={account}>
-                    <p style="padding: 0 20px; display: flex; justify-content: space-between; text-align: center;">
+                    <div style="padding: 0 20px; display: flex; justify-content: space-between; text-align: center;">
                         <template if:true={isManager}>
                             <span>
                                 <lightning-button
                                         label="Add Item"
-                                        variant="brand"
                                         onclick={handleShowCreateForm}>
                                 </lightning-button>
                             </span>
@@ -26,7 +29,14 @@
                         <span style="flex: 1; text-align: left;"><strong>{account.Name}</strong></span>
                         <span style="flex: 1;"><strong>{account.AccountNumber}</strong></span>
                         <span style="flex: 1; text-align: right;"><strong>{account.Industry}</strong></span>
-                    </p>
+                        <span>
+                            <lightning-button
+                                label="Cart"
+                                variant="brand"
+                                onclick={handleCartOpen}>
+                            </lightning-button>
+                        </span>
+                    </div>
                 </template>
 
                 <template lwc:else>
@@ -35,10 +45,14 @@
                     </p>
                 </template>
 
+                <!-- NEW ITEM FORM -->
+
                 <c-item-create-form
                         visible={isModalOpen}
                         onclose={handleCloseModal}>
                 </c-item-create-form>
+
+                <c-cart visible={isCartOpen} account-id={accountId} onclose={handleCloseCart}></c-cart>
             </template>
         </div>
     </lightning-card>

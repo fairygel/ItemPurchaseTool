@@ -1,20 +1,35 @@
-import { LightningElement, track } from 'lwc';
+import { LightningElement, track, wire } from 'lwc';
+import { CurrentPageReference } from 'lightning/navigation'
 import getItemsBySearch from '@salesforce/apex/ItemController.getItemsBySearch';
 import getPicklistValues from '@salesforce/apex/ItemController.getPicklistValues';
+import addItemToCart from '@salesforce/apex/CartController.addItemToCart';
 
 export default class ItemList extends LightningElement {
     @track items;
     @track error;
     @track searchKey = '';
 
+    // applied filters
     @track familyFilters = [];
     @track typeFilters = [];
 
+    // all available options for filters
     @track familyOptions = [];
     @track typeOptions = [];
 
     @track selectedItem = null;
     @track isModalOpen = false;
+
+    @track cartQuantities = {};
+
+    @track accountId;
+
+    @wire(CurrentPageReference)
+    getPageRef(pageRef) {
+        if (pageRef?.state.c__accountId) {
+            this.accountId = pageRef.state.c__accountId;
+        }
+    }
 
     handleShowDetails(event) {
         const itemId = event.currentTarget.dataset.id;
@@ -31,6 +46,21 @@ export default class ItemList extends LightningElement {
     connectedCallback() {
         this.loadPicklistValues();
         this.loadItems();
+    }
+
+    handleAddToCart(event) {
+        const itemId = event.currentTarget.dataset.id;
+        addItemToCart({ accountId: this.accountId, itemId: itemId })
+            .then(quantity => {
+                this.cartQuantities = {
+                    ...this.cartQuantities,
+                    [itemId]: quantity
+                };
+            })
+            .catch(error => {
+                console.error(error);
+                this.error = error;
+            });
     }
 
     loadPicklistValues() {
