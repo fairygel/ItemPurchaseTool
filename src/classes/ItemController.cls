@@ -5,22 +5,29 @@ public with sharing class ItemController {
 												 List<String> typeFilters) {
 		String search = '%' + searchKey + '%';
 
-		List<String> filters = new List<String>();
-		filters.add('(Name__c LIKE :search OR Description__c LIKE :search)');
+		// if some filter is null or empty, we will ignore it
+		// just by placing %%, what means always TRUE (every word contains '' lol)
+		String ignoreFamily;
+		String ignoreType;
 
-		if (familyFilters != null && !familyFilters.isEmpty()) {
-			filters.add('Family__c IN :familyFilters');
+		if (familyFilters == null || familyFilters.isEmpty()) {
+			ignoreFamily = '%%';
 		}
-		if (typeFilters != null && !typeFilters.isEmpty()) {
-			filters.add('Type__c IN :typeFilters');
+
+		if (typeFilters == null || typeFilters.isEmpty()) {
+			ignoreType = '%%';
 		}
 
-		String whereClause = String.join(filters, ' AND ');
-		String query =
-				'SELECT Id, Name__c, Description__c, Type__c, Family__c, Price__c, Image__c FROM Item__c WHERE ' +
-				whereClause + ' LIMIT 50';
+		List<Item__c> results = [
+			SELECT ID, Name__c, Description__c, Type__c, Family__c, Price__c, Image__c
+			FROM Item__c
+				WHERE (Name__c LIKE :search OR Description__c LIKE :search)
+				AND ( Family__c IN :familyFilters OR Family__c LIKE :ignoreFamily)
+				AND ( Type__c IN :typeFilters OR Type__c LIKE :ignoreType)
+				LIMIT 50
+		];
 
-		return Database.query(query);
+		return results;
 	}
 
 
