@@ -1,5 +1,6 @@
 import {LightningElement, api, track} from 'lwc';
 import getCartItems from '@salesforce/apex/CartController.getCartItems';
+import checkoutCart from '@salesforce/apex/PurchaseController.checkoutCart';
 
 export default class Cart extends LightningElement {
     @api accountId;
@@ -43,6 +44,21 @@ export default class Cart extends LightningElement {
                 this.isLoading = false;
                 this.cartItems = [];
                 console.log(err);
+            })
+    }
+
+    handleCheckout() {
+        this.isLoading = true;
+        checkoutCart({ accountId: this.accountId })
+            .then(() => {
+                this.handleClose();
+                this.dispatchEvent(new CustomEvent('orderplaced'));
+                this.isLoading = false;
+            })
+            .catch((err) => {
+                console.log(err);
+                this.error = err;
+                this.isLoading = false;
             })
     }
 

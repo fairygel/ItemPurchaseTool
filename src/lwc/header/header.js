@@ -1,4 +1,4 @@
-import { LightningElement, wire } from 'lwc';
+import {LightningElement, track, wire} from 'lwc';
 import { CurrentPageReference, NavigationMixin } from 'lightning/navigation';
 import getAccountDetails from '@salesforce/apex/AccountController.getAccountDetails'
 import isUserManager from '@salesforce/apex/UserController.isUserManager'
@@ -12,7 +12,9 @@ export default class ItemPurchaseTool extends NavigationMixin(LightningElement) 
     account;
     accountError;
 
-    isModalOpen = false;
+    isCartVisible = false;
+    isCreateFormOpened = false;
+    @track isOrdersOpened = false;
 
     @wire(isUserManager)
     wiredIsManager ({error, data}) {
@@ -57,11 +59,25 @@ export default class ItemPurchaseTool extends NavigationMixin(LightningElement) 
         });
     }
 
-    handleShowCreateForm() {
-        this.isModalOpen = true;
+    handleOrderPlaced() {
+        this.isOrdersOpened = true;
+        this.template.querySelector('c-purchases').open();
     }
 
-    handleCloseModal() {
-        this.isModalOpen = false;
+    openOrders() {
+        this.isOrdersOpened = true;
+        this.template.querySelector('c-purchases').open();
+    }
+
+    handleCloseOrders() {
+        this.isOrdersOpened = false;
+    }
+
+    handleShowCreateForm() {
+        this.isCreateFormOpened = true;
+    }
+
+    handleCloseCreateForm() {
+        this.isCreateFormOpened = false;
     }
 }

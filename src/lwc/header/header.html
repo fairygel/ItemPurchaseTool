@@ -31,6 +31,13 @@
                         <span style="flex: 1; text-align: right;"><strong>{account.Industry}</strong></span>
                         <span>
                             <lightning-button
+                                    label="Orders"
+                                    variant="neutral"
+                                    onclick={openOrders}>
+                            </lightning-button>
+                        </span>
+                        <span>
+                            <lightning-button
                                 label="Cart"
                                 variant="brand"
                                 onclick={handleCartOpen}>
@@ -48,11 +55,21 @@
                 <!-- NEW ITEM FORM -->
 
                 <c-item-create-form
-                        visible={isModalOpen}
-                        onclose={handleCloseModal}>
+                        visible={isCreateFormOpened}
+                        onclose={handleCloseCreateForm}>
                 </c-item-create-form>
 
-                <c-cart visible={isCartOpen} account-id={accountId} onclose={handleCloseCart}></c-cart>
+                <c-purchases
+                        account-id={accountId}
+                        visible={isOrdersOpened}
+                        onclose={handleCloseOrders}>
+                </c-purchases>
+
+                <c-cart onorderplaced={handleOrderPlaced}
+                        visible={isCartVisible}
+                        account-id={accountId}
+                        onclose={handleCloseCart}>
+                </c-cart>
             </template>
         </div>
     </lightning-card>

@@ -25,13 +25,20 @@
                     </template>
 
                     <template if:true={error}>
-                        <p>Cart is empty.</p>
+                        <p>{error}</p>
                     </template>
                 </div>
 
                 <footer class="slds-modal__footer">
                     <lightning-button label="Close"
                                       onclick={handleClose}></lightning-button>
+                    <lightning-button
+                            label="Checkout"
+                            onclick={handleCheckout}
+                            variant="brand"
+                            disabled={isLoading}
+                            class="slds-m-left_small">
+                    </lightning-button>
                 </footer>
             </div>
         </section>
