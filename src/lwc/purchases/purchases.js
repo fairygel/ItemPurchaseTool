@@ -20,7 +20,9 @@ export default class Purchases extends LightningElement {
             this.error = 'AccountId is missing';
             return;
         }
+
         this.isLoading = true;
+
         getPurchasesByAccount({ accountId: this.accountId })
             .then(data => {
                 this.purchases = data;

@@ -8,12 +8,11 @@ export default class ItemPurchaseTool extends NavigationMixin(LightningElement) 
     isManagerError;
 
     accountId;
-
     account;
     accountError;
 
     isCartVisible = false;
-    isCreateFormOpened = false;
+    isCreateItemOpened = false;
     @track isOrdersOpened = false;
 
     @wire(isUserManager)
@@ -37,15 +36,7 @@ export default class ItemPurchaseTool extends NavigationMixin(LightningElement) 
             .catch(error => {console.log(error); this.accountError = error;});
     }
 
-    handleCartOpen() {
-        this.isCartVisible = true;
-        this.template.querySelector('c-cart').open();
-    }
-
-    handleCloseCart() {
-        this.isCartVisible = false;
-    }
-
+    // navigate to accounts list
     handleNavigate() {
         this[NavigationMixin.Navigate]({
             type: 'standard__objectPage',
@@ -59,9 +50,13 @@ export default class ItemPurchaseTool extends NavigationMixin(LightningElement) 
         });
     }
 
-    handleOrderPlaced() {
-        this.isOrdersOpened = true;
-        this.template.querySelector('c-purchases').open();
+    handleCartOpen() {
+        this.isCartVisible = true;
+        this.template.querySelector('c-cart').open();
+    }
+
+    handleCloseCart() {
+        this.isCartVisible = false;
     }
 
     openOrders() {
@@ -74,10 +69,10 @@ export default class ItemPurchaseTool extends NavigationMixin(LightningElement) 
     }
 
     handleShowCreateForm() {
-        this.isCreateFormOpened = true;
+        this.isCreateItemOpened = true;
     }
 
     handleCloseCreateForm() {
-        this.isCreateFormOpened = false;
+        this.isCreateItemOpened = false;
     }
 }

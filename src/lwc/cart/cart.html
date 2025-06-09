@@ -8,14 +8,16 @@
 
                 <div class="slds-modal__content slds-p-around_medium">
                     <template if:true={isLoading}>
-                        <lightning-spinner alternative-text="loading.."></lightning-spinner>
+                        <div style="height: 3rem; position: relative">
+                            <lightning-spinner alternative-text="loading.."></lightning-spinner>
+                        </div>
                     </template>
 
+                    <!-- ITEMS + total -->
                     <template if:true={cartItems}>
                         <template for:each={cartItems} for:item="item">
                             <div key={item.id} class="slds-box slds-m-bottom--small">
-                                <h3>{item.Item__r.Name__c}</h3>
-                                <p>Quantity: {item.Quantity__c}</p>
+                                <h2><strong>{item.Item__r.Name__c}</strong> ×{item.Quantity__c}</h2>
                                 <p>Price: ${item.Total__c}</p>
                             </div>
                         </template>
@@ -36,7 +38,7 @@
                             label="Checkout"
                             onclick={handleCheckout}
                             variant="brand"
-                            disabled={isLoading}
+                            disabled={isCheckoutDisabled}
                             class="slds-m-left_small">
                     </lightning-button>
                 </footer>

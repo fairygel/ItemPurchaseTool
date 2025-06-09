@@ -2,3 +2,5 @@
 .idea
 .jetforcer
 node_modules
+
+src/customMetadata

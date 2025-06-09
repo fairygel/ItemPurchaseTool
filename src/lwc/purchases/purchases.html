@@ -5,34 +5,42 @@
                 <header class="slds-modal__header">
                     <h2 class="slds-text-heading_medium">Your Orders</h2>
                 </header>
+
                 <div class="slds-modal__content slds-p-around_medium">
                     <template if:true={isLoading}>
-                        <lightning-spinner alternative-text="Loading..." size="medium"></lightning-spinner>
+                        <div style="height: 3rem; position: relative">
+                            <lightning-spinner alternative-text="loading.."></lightning-spinner>
+                        </div>
                     </template>
+
                     <template if:true={error}>
                         <p class="slds-text-color_error">{error}</p>
                     </template>
                     <template if:true={purchases}>
                         <template for:each={purchases} for:item="purchase">
                             <div key={purchase.Id} class="slds-box slds-m-bottom_medium">
-                                <h3>{purchase.Name} — {purchase.CreatedDate}</h3>
-                                <p>Total Items: {purchase.TotalItems__c}</p>
-                                <p>Grand Total: ${purchase.GrandTotal__c}</p>
-                                <div class="slds-m-left_medium slds-m-top_small">
-                                    <p>content:</p>
+                                <h1 class="slds-text-heading--small"><strong>purchase - {purchase.Name}</strong> (from {purchase.CreatedDate})</h1>
+                                <p class="slds-m-top--small">content:</p>
+                                <div class="slds-m-left_medium">
                                     <template for:each={purchase.Purchase_Lines__r} for:item="line">
                                         <p key={line.Id}>
                                             {line.ItemId__r.Name__c} × {line.Amount__c} - ${line.UnitCost__c}
                                         </p>
                                     </template>
                                 </div>
+                                <div class="slds-grid slds-grid_align-spread slds-m-top--small">
+                                    <p class="slds-col"><strong>Total Items:</strong> {purchase.TotalItems__c}</p>
+                                    <p class="slds-col"><strong>Grand Total:</strong> ${purchase.GrandTotal__c}</p>
+                                </div>
                             </div>
                         </template>
                     </template>
-                    <template if:true={purchases} if:false={purchases.length}>
+
+                    <template if:false={purchases.length}>
                         <p>No orders found.</p>
                     </template>
                 </div>
+
                 <footer class="slds-modal__footer">
                     <lightning-button label="Close" onclick={handleClose}></lightning-button>
                 </footer>

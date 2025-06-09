@@ -4,73 +4,84 @@
 
             <!-- ERROR NO ACCOUNT CHOSEN -->
 
-            <template lwc:if={accountError}>
-                <div class="slds-text-align--center">
-                    <strong>account not chosen. </strong>
-                    <lightning-button
-                            label="go to accounts"
-                            onclick={handleNavigate}
-                            variant="brand">
-                    </lightning-button>
+            <template if:true={accountError}>
+                <div class="slds-grid slds-grid_align-spread slds-p-horizontal_medium">
+                    <div class="slds-col slds-align-middle">
+                        <h1><strong>Account not chosen...</strong></h1>
+                    </div>
+                    <div class="slds-col">
+                        <lightning-button
+                                label="Accounts"
+                                onclick={handleNavigate}
+                                variant="brand">
+                        </lightning-button>
+                    </div>
                 </div>
             </template>
 
-            <template lwc:else>
-                <template lwc:if={account}>
-                    <div style="padding: 0 20px; display: flex; justify-content: space-between; text-align: center;">
-                        <template if:true={isManager}>
-                            <span>
-                                <lightning-button
-                                        label="Add Item"
-                                        onclick={handleShowCreateForm}>
-                                </lightning-button>
-                            </span>
-                        </template>
-                        <span style="flex: 1; text-align: left;"><strong>{account.Name}</strong></span>
-                        <span style="flex: 1;"><strong>{account.AccountNumber}</strong></span>
-                        <span style="flex: 1; text-align: right;"><strong>{account.Industry}</strong></span>
-                        <span>
-                            <lightning-button
-                                    label="Orders"
-                                    variant="neutral"
-                                    onclick={openOrders}>
-                            </lightning-button>
-                        </span>
-                        <span>
-                            <lightning-button
+            <template if:true={account}>
+                <div class="slds-grid slds-p-horizontal_medium slds-p-vertical_x-small slds-align_absolute-center"
+                     style="justify-content: space-between; align-items: center;">
+                    <div class="slds-col">
+                        <h1><strong>{account.Name}</strong></h1>
+                        <p>{account.Industry} ({account.AccountNumber})</p>
+                    </div>
+
+                    <div class="slds-grid slds-grid_align-end slds-grid_vertical-align-center">
+                        <lightning-button
                                 label="Cart"
                                 variant="brand"
-                                onclick={handleCartOpen}>
-                            </lightning-button>
-                        </span>
+                                onclick={handleCartOpen}
+                                class="slds-m-left--x-small">
+                        </lightning-button>
+
+                        <lightning-button-menu
+                                alternative-text="v"
+                                icon-name="utility:down"
+                                menu-alignment="right">
+                            <template if:true={isManager}>
+                                <lightning-menu-item
+                                        label="New Item"
+                                        value="add"
+                                        onclick={handleShowCreateForm}>
+                                </lightning-menu-item>
+                            </template>
+                            <lightning-menu-item
+                                    label="Orders"
+                                    value="orders"
+                                    onclick={openOrders}>
+                            </lightning-menu-item>
+                        </lightning-button-menu>
                     </div>
-                </template>
-
-                <template lwc:else>
-                    <p class="slds-text-align--center">
-                        <strong>loading..</strong>
-                    </p>
-                </template>
-
-                <!-- NEW ITEM FORM -->
-
-                <c-item-create-form
-                        visible={isCreateFormOpened}
-                        onclose={handleCloseCreateForm}>
-                </c-item-create-form>
-
-                <c-purchases
-                        account-id={accountId}
-                        visible={isOrdersOpened}
-                        onclose={handleCloseOrders}>
-                </c-purchases>
-
-                <c-cart onorderplaced={handleOrderPlaced}
-                        visible={isCartVisible}
-                        account-id={accountId}
-                        onclose={handleCloseCart}>
-                </c-cart>
+                </div>
             </template>
+
+            <template if:false={account}>
+                <template if:false={accountError}>
+                    <h1 class="slds-text-align--center">
+                        <strong>loading..</strong>
+                    </h1>
+                </template>
+            </template>
+
+            <!-- MODAL WINDOWS (HIDDEN) -->
+
+            <c-item-create-form
+                    visible={isCreateItemOpened}
+                    onclose={handleCloseCreateForm}>
+            </c-item-create-form>
+
+            <c-purchases
+                    account-id={accountId}
+                    visible={isOrdersOpened}
+                    onclose={handleCloseOrders}>
+            </c-purchases>
+
+            <c-cart onorderplaced={openOrders}
+                    visible={isCartVisible}
+                    account-id={accountId}
+                    onclose={handleCloseCart}>
+            </c-cart>
         </div>
     </lightning-card>
 </template>

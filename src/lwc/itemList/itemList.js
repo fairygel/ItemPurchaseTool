@@ -1,7 +1,8 @@
-import { LightningElement, track, wire } from 'lwc';
-import { CurrentPageReference } from 'lightning/navigation'
+import {LightningElement, track, wire} from 'lwc';
+import {CurrentPageReference} from 'lightning/navigation'
 import getItemsBySearch from '@salesforce/apex/ItemController.getItemsBySearch';
-import getPicklistValues from '@salesforce/apex/ItemController.getPicklistValues';
+import getTypeOptions from '@salesforce/apex/FilterService.getTypeOptions';
+import getFamilyOptions from '@salesforce/apex/FilterService.getFamilyOptions';
 import addItemToCart from '@salesforce/apex/CartController.addItemToCart';
 
 export default class ItemList extends LightningElement {
@@ -18,7 +19,8 @@ export default class ItemList extends LightningElement {
     @track typeOptions = [];
 
     @track selectedItem = null;
-    @track isModalOpen = false;
+
+    @track isDetailsOpen = false;
 
     @track cartQuantities = {};
 
@@ -33,13 +35,12 @@ export default class ItemList extends LightningElement {
 
     handleShowDetails(event) {
         const itemId = event.currentTarget.dataset.id;
-        const item = this.items.find(i => i.Id === itemId);
-        this.selectedItem = item;
-        this.isModalOpen = true;
+        this.selectedItem = this.items.find(i => i.Id === itemId);
+        this.isDetailsOpen = true;
     }
 
     handleCloseModal() {
-        this.isModalOpen = false;
+        this.isDetailsOpen = false;
         this.selectedItem = null;
     }
 
@@ -64,14 +65,20 @@ export default class ItemList extends LightningElement {
     }
 
     loadPicklistValues() {
-        getPicklistValues()
-            .then(result => {
-                this.familyOptions = result.Family;
-                this.typeOptions = result.Type;
+        getTypeOptions()
+            .then(typeOptions => {
+                this.typeOptions = typeOptions;
             })
             .catch(error => {
                 this.error = error.body.message;
-            });
+            })
+        getFamilyOptions()
+            .then(familyOptions => {
+                this.familyOptions = familyOptions;
+            })
+            .catch(error => {
+                this.error = error.body.message;
+            })
     }
 
     loadItems() {

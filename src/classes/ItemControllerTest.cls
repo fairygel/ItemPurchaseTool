@@ -56,15 +56,6 @@ public class ItemControllerTest {
 	}
 
 	@IsTest
-	static void testGetPicklistValues() {
-		Test.startTest();
-		Map<String, List<String>> picklistValues = ItemController.getPicklistValues();
-		Test.stopTest();
-		System.assert(picklistValues.containsKey('Family'));
-		System.assert(picklistValues.containsKey('Type'));
-	}
-
-	@IsTest
 	static void testCreateItem() {
 		String typeValue = getFirstPicklistValue(Item__c.Type__c);
 		String familyValue = getFirstPicklistValue(Item__c.Family__c);
@@ -80,21 +71,5 @@ public class ItemControllerTest {
 		Test.stopTest();
 		List<Item__c> items = [SELECT Id FROM Item__c WHERE Name__c = 'NewItem'];
 		System.assertEquals(1, items.size());
-	}
-
-	@IsTest
-	static void testGetTypeOptions() {
-		Test.startTest();
-		List<String> types = ItemController.getTypeOptions();
-		Test.stopTest();
-		System.assert(types != null && types.size() > 0);
-	}
-
-	@IsTest
-	static void testGetFamilyOptions() {
-		Test.startTest();
-		List<String> families = ItemController.getFamilyOptions();
-		Test.stopTest();
-		System.assert(families != null && families.size() > 0);
 	}
 }

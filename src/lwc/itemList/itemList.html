@@ -28,7 +28,7 @@
                                             <template if:true={item.Image__c}>
                                                 <div class="slds-align_absolute-center slds-m-bottom_small">
                                                     <img src={item.Image__c} alt={item.Name__c}
-                                                         style="max-height: 150px; width: 100%; object-fit: cover; border-radius: 0.25rem;"/>
+                                                         style="max-height: 500px; width: 100%; object-fit: cover; border-radius: 0.25rem;"/>
                                                 </div>
                                             </template>
                                             <p><strong>Price:</strong> ${item.Price__c}</p>
@@ -43,13 +43,15 @@
                                                     onclick={handleShowDetails}
                                                     class="slds-m-top_small">
                                             </lightning-button>
-                                            <lightning-button
-                                                    label="Add To Cart"
-                                                    variant="brand"
-                                                    data-id={item.Id}
-                                                    onclick={handleAddToCart}
-                                                    class="slds-m-top_small">
-                                            </lightning-button>
+                                            <template if:true={accountId}>
+                                                <lightning-button
+                                                        label="Add To Cart"
+                                                        variant="brand"
+                                                        data-id={item.Id}
+                                                        onclick={handleAddToCart}
+                                                        class="slds-m-top_small">
+                                                </lightning-button>
+                                            </template>
                                         </div>
                                     </lightning-card>
                                 </div>
@@ -62,7 +64,7 @@
 
                 <c-item-details
                         item={selectedItem}
-                        visible={isModalOpen}
+                        visible={isDetailsOpen}
                         onclose={handleCloseModal}>
                 </c-item-details>
 

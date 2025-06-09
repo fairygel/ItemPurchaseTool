@@ -1,5 +1,6 @@
 public with sharing class PurchaseController {
 	@AuraEnabled(cacheable=true)
+	// return purchases and its content
 	public static List<Purchase__c> getPurchases(Id accountId) {
 		return [
 			SELECT Id, Name__c, GrandTotal__c, CreatedDate, TotalItems__c,
@@ -12,6 +13,7 @@ public with sharing class PurchaseController {
 
 	@AuraEnabled
 	public static void checkoutCart(Id accountId) {
+		// active cart
 		List<Cart__c> carts = [
 				SELECT Id FROM Cart__c
 				WHERE Account__c = :accountId AND Status__c != 'Ordered' LIMIT 1
@@ -20,6 +22,7 @@ public with sharing class PurchaseController {
 
 		Cart__c cart = carts[0];
 
+		// cart content
 		List<CartItem__c> cartItems = [
 				SELECT Item__c, Quantity__c, Item__r.Price__c
 				FROM CartItem__c
@@ -32,6 +35,7 @@ public with sharing class PurchaseController {
 
 		List<PurchaseLine__c> lines = new List<PurchaseLine__c>();
 
+		// fill purchase line from cart items
 		for (CartItem__c ci : cartItems) {
 			lines.add(new PurchaseLine__c(
 					PurchaseId__c = p.Id,

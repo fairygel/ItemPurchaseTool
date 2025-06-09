@@ -26,19 +26,23 @@
                             onchange={handlePriceChange}>
                     </lightning-input>
 
-                    <lightning-combobox
-                            label="Type"
-                            value={item.type}
-                            options={typeOptions}
-                            onchange={handleTypeChange}>
-                    </lightning-combobox>
+                    <div style="display: flex; gap: 1rem; align-items: flex-start;">
+                        <lightning-combobox
+                                label="Type"
+                                value={item.type}
+                                options={typeOptions}
+                                onchange={handleTypeChange}
+                                style="flex: 1;">
+                        </lightning-combobox>
 
-                    <lightning-combobox
-                            label="Family"
-                            value={item.family}
-                            options={familyOptions}
-                            onchange={handleFamilyChange}>
-                    </lightning-combobox>
+                        <lightning-combobox
+                                label="Family"
+                                value={item.family}
+                                options={familyOptions}
+                                onchange={handleFamilyChange}
+                                style="flex: 1;">
+                        </lightning-combobox>
+                    </div>
 
                     <lightning-input
                             label="Image URL"
@@ -57,7 +61,8 @@
 
                 <footer class="slds-modal__footer slds-grid slds-grid_align-end">
                     <lightning-button label="Close" onclick={handleClose}></lightning-button>
-                    <lightning-button class="slds-m-left_small" label="Create" variant="brand" onclick={handleCreate}></lightning-button>
+                    <lightning-button class="slds-m-left_small" label="Create" variant="brand"
+                                      onclick={handleCreate}></lightning-button>
                 </footer>
             </div>
         </section>

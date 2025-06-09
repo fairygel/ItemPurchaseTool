@@ -5,6 +5,7 @@ public with sharing class CartController {
 		List<Cart__c> carts = [SELECT Id FROM Cart__c WHERE Account__c = :accountId AND Status__c != 'Ordered' LIMIT 1];
 		Cart__c cart;
 
+		// new cart if not found
 		if (carts.isEmpty()) {
 			cart = new Cart__c(Account__c = accountId, Status__c = 'New');
 			insert cart;
@@ -18,6 +19,7 @@ public with sharing class CartController {
 			[SELECT Id, Quantity__c FROM CartItem__c WHERE Cart__c=:cart.Id AND Item__c = :itemId LIMIT 1];
 		CartItem__c item;
 
+		// new item if not found, else update it's quantity
 		if (existingItems.isEmpty()) {
 			item = new CartItem__c(Cart__c = cartId, Item__c = itemId, Quantity__c = 1);
 			insert item;

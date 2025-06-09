@@ -200,6 +200,11 @@
         <unique>false</unique>
     </fields>
     <label>Purchase Line</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
     <nameField>
         <label>Purchase Line Name</label>
         <type>Text</type>

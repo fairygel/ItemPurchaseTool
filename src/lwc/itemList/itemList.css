@@ -26,10 +26,12 @@
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
+
 }
 
 .card-item {
-    flex: 1 1 calc(33.33% - 1rem);
+    flex: 1 1 calc(20% - 1rem);
     min-width: 300px;
+    max-width: 400px;
     box-sizing: border-box;
 }

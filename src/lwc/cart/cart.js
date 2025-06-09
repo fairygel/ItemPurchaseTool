@@ -66,4 +66,8 @@ export default class Cart extends LightningElement {
         this.visible = false;
         this.dispatchEvent(new CustomEvent('close'));
     }
+
+    get isCheckoutDisabled() {
+        return this.isLoading || !this.cartItems || this.cartItems.length === 0;
+    }
 }
