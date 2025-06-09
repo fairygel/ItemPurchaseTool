@@ -35,3 +35,16 @@
     max-width: 400px;
     box-sizing: border-box;
 }
+
+.quantity-badge {
+    border: 1px solid #1589ee;
+    border-radius: 4px;
+    padding: 4px 0 5px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #1589ee;
+    min-width: 24px;
+    text-align: center;
+    display: inline-block;
+}

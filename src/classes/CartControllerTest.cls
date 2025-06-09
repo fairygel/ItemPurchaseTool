@@ -10,7 +10,7 @@ public class CartControllerTest {
 		insert item;
 
 		Test.startTest();
-		Decimal quantity = CartController.addItemToCart(acc.Id, item.Id);
+		Decimal quantity = CartController.addItemToCart(acc.Id, item.Id, false);
 		Test.stopTest();
 
 		System.assertEquals(1, quantity, 'Quantity should be 1 on first insert');
@@ -31,7 +31,7 @@ public class CartControllerTest {
 		insert cartItem;
 
 		Test.startTest();
-		Decimal quantity = CartController.addItemToCart(acc.Id, item.Id);
+		Decimal quantity = CartController.addItemToCart(acc.Id, item.Id, false);
 		Test.stopTest();
 
 		System.assertEquals(2, quantity, 'Quantity should increment to 2');

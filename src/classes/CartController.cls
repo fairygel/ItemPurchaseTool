@@ -1,7 +1,7 @@
 public with sharing class CartController {
 	// return total amount of item in cart TODO: use return value
 	@AuraEnabled
-	public static Decimal addItemToCart(Id accountId, Id itemId) {
+	public static Decimal addItemToCart(Id accountId, Id itemId, Boolean shouldSubtract) {
 		List<Cart__c> carts = [SELECT Id FROM Cart__c WHERE Account__c = :accountId AND Status__c != 'Ordered' LIMIT 1];
 		Cart__c cart;
 
@@ -25,7 +25,16 @@ public with sharing class CartController {
 			insert item;
 		} else {
 			item = existingItems[0];
-			item.Quantity__c += 1;
+			if (shouldSubtract) {
+				item.Quantity__c -= 1;
+
+				if (item.Quantity__c <= 0) {
+					delete item;
+					return 0;
+				}
+			}
+			else
+				item.Quantity__c += 1;
 			update item;
 		}
 
